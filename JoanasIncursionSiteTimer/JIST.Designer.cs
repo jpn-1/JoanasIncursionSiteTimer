@@ -38,7 +38,7 @@ namespace JoanasIncursionSiteTimer
             this.lblMouseWarning = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.rtbTimers = new System.Windows.Forms.RichTextBox();
+            this.lvTimers = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // btnSetup
@@ -101,17 +101,15 @@ namespace JoanasIncursionSiteTimer
             this.lblMouseWarning.Size = new System.Drawing.Size(0, 13);
             this.lblMouseWarning.TabIndex = 6;
             // 
-            // rtbTimers
+            // lvTimers
             // 
-            this.rtbTimers.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.rtbTimers.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbTimers.Enabled = false;
-            this.rtbTimers.Location = new System.Drawing.Point(12, 100);
-            this.rtbTimers.Name = "rtbTimers";
-            this.rtbTimers.ReadOnly = true;
-            this.rtbTimers.Size = new System.Drawing.Size(225, 118);
-            this.rtbTimers.TabIndex = 10;
-            this.rtbTimers.Text = "";
+            this.lvTimers.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.lvTimers.HideSelection = false;
+            this.lvTimers.Location = new System.Drawing.Point(12, 95);
+            this.lvTimers.Name = "lvTimers";
+            this.lvTimers.Size = new System.Drawing.Size(224, 123);
+            this.lvTimers.TabIndex = 12;
+            this.lvTimers.UseCompatibleStateImageBehavior = false;
             // 
             // JIST
             // 
@@ -119,7 +117,7 @@ namespace JoanasIncursionSiteTimer
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(248, 230);
-            this.Controls.Add(this.rtbTimers);
+            this.Controls.Add(this.lvTimers);
             this.Controls.Add(this.lblMouseWarning);
             this.Controls.Add(this.rtbOutput);
             this.Controls.Add(this.cbIsSetup);
@@ -149,7 +147,7 @@ namespace JoanasIncursionSiteTimer
         private System.Windows.Forms.Label lblMouseWarning;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer timer2;
-        private System.Windows.Forms.RichTextBox rtbTimers;
+        private System.Windows.Forms.ListView lvTimers;
     }
 }
 

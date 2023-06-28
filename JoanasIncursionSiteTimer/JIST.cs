@@ -31,10 +31,12 @@ namespace JoanasIncursionSiteTimer
         private string logFilePath = "log.txt";
         private Logger logger;
         private bool isFirstScan = true;
-        //private List<TimerItem> timers;
+        private List<TimerItem> timers;
         public JIST()
         {
             InitializeComponent();
+            timers = new List<TimerItem>();
+            this.TopMost = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -52,6 +54,32 @@ namespace JoanasIncursionSiteTimer
             mousePositionEnd = Point.Empty;
             InitializeMouseHook();
         }
+
+        private void AddTimerItem(string timerName, int countdownSeconds)
+        {
+            // Create a new TimerItem
+            TimerItem timerItem = new TimerItem(timerName, countdownSeconds, lvTimers);
+
+            // Add the TimerItem to the list
+            timers.Add(timerItem);
+
+            // Create a new ListViewItem for the TimerItem
+            ListViewItem item = new ListViewItem(timerName);
+            item.Text= (TimeSpan.FromSeconds(countdownSeconds).ToString(@"mm\:ss"));
+            item.Tag = timerItem;
+
+            // Add the item to the ListView
+            lvTimers.Invoke(new Action(() =>
+            {
+           
+      
+                    timerItem.StartTimer();
+       
+            }));
+            
+        }
+
+
 
         private void InitializeMouseHook()
 
@@ -274,6 +302,7 @@ namespace JoanasIncursionSiteTimer
                             // Start a timer
                             System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\..\Sounds\ding.wav");
                             player.Play();
+                            AddTimerItem("Timer!",435);
                         }
 
                         cachedSites.Clear();
