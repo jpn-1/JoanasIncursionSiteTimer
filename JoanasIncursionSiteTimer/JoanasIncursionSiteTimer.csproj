@@ -70,6 +70,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="helpers\NativeMethods.cs" />
+    <Compile Include="models\Logger.cs" />
     <Compile Include="JIST.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +80,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="models\TimerItem.cs" />
+    <Compile Include="utility\HqSites.cs" />
     <EmbeddedResource Include="JIST.resx">
       <DependentUpon>JIST.cs</DependentUpon>
     </EmbeddedResource>
@@ -124,6 +128,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Tesseract.5.2.0\build\Tesseract.targets" Condition="Exists('..\packages\Tesseract.5.2.0\build\Tesseract.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

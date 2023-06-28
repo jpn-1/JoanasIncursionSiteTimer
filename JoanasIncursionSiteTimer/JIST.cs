@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Tesseract;
+using JoanasIncursionSiteTimer.models;
+using JoanasIncursionSiteTimer.helpers;
+using JoanasIncursionSiteTimer.utility;
+
 
 namespace JoanasIncursionSiteTimer
 {
@@ -17,7 +20,6 @@ namespace JoanasIncursionSiteTimer
         private Rectangle selectedRectangle;
         private Point mousePositionStart;
         private Point mousePositionEnd;
-        private bool isDrawing = false;
         private bool isActive = false;
         List<string> cachedSites = new List<string>();
         private const int WH_MOUSE_LL = 14;
@@ -29,8 +31,7 @@ namespace JoanasIncursionSiteTimer
         private string logFilePath = "log.txt";
         private Logger logger;
         private bool isFirstScan = true;
-        private int timerIDTracker = 0;
-        private List<SiteTimer> timers = new List<SiteTimer>();
+        //private List<TimerItem> timers;
         public JIST()
         {
             InitializeComponent();
@@ -50,15 +51,6 @@ namespace JoanasIncursionSiteTimer
             mousePositionStart = Point.Empty;
             mousePositionEnd = Point.Empty;
             InitializeMouseHook();
-            this.isDrawing = true;
-        }
-
-        private void CreateSiteTimer()
-        {
-            timers.Add(new SiteTimer(this.rtbTimers));
-            timers[timers.Count - 1].timer.Start();
-            timers[timers.Count - 1].timer.Enabled = true;
-
         }
 
         private void InitializeMouseHook()
@@ -91,7 +83,6 @@ namespace JoanasIncursionSiteTimer
                         UnhookMouse();
 
                         cbIsSetup.Checked = true;
-                        this.isDrawing = false;
                         btnStartStop.Enabled = true;
                         return new IntPtr(1);
                         // Call the next hook in the hook chain
@@ -244,7 +235,7 @@ namespace JoanasIncursionSiteTimer
 
                 page.Dispose();
 
-                HandleSiteCountChange(UpdateActiveSitesFromParsedData(data, 3));
+                HandleSiteCountChange(UpdateActiveSitesFromParsedData(data, 4));
 
                 img.Dispose();
                 Thread.Sleep(500);
@@ -368,103 +359,6 @@ namespace JoanasIncursionSiteTimer
             UnhookMouse();
         }
     }
-    internal static class NativeMethods
-    {
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct POINT
-        {
-            public int X;
-            public int Y;
-        }
-
-        internal delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, uint dwThreadId);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        internal static extern bool GetCursorPos(out POINT lpPoint);
-    }
-    internal static class HQSites
-    {
-
-        public static string TPPH = "True Power Provisional Headquaters";
-        public static string NRF = "Nation Rebirth Facility";
-        public static string TCRC = "True Creation Research Center";
-    };
-    public class Logger
-    {
-        private readonly string logFilePath;
-
-        public Logger(string logFilePath)
-        {
-            this.logFilePath = logFilePath;
-        }
-
-        public void Log(string message)
-        {
-            try
-            {
-                using (StreamWriter writer = File.AppendText(logFilePath))
-                {
-                    string logEntry = $"{DateTime.Now} - {message}";
-                    writer.WriteLine(logEntry);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that occur during logging
-                Console.WriteLine($"An error occurred while logging: {ex.Message}");
-            }
-        }
-    }
-
-    public class SiteTimer{
-        public  int remainingSeconds = 435;
-        public System.Windows.Forms.Timer timer;
-        public RichTextBox internalRTBox;
-
-        public SiteTimer(RichTextBox rtb)
-        {
-           timer = new System.Windows.Forms.Timer();
-            timer.Interval = 1000;
-            internalRTBox = rtb;
-            timer.Tick += Timer_Tick;
-          
-
-
-        }
-
-        public void Timer_Tick(object sender, EventArgs e)
-        {
-            remainingSeconds--;
-           
-            if (remainingSeconds >= 0)
-            {
-                internalRTBox.Invoke(new Action(() =>
-                {
-                    internalRTBox.Text += remainingSeconds.ToString();
-                }));
-                    
-                   
-            }
-            else
-            {
-                timer.Stop();
-                
-            }
-        }
-
-    
-
-    }
-
+   
 
 }
