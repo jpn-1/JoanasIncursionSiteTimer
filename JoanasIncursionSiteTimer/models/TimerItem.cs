@@ -37,14 +37,9 @@ namespace JoanasIncursionSiteTimer.models
         // The method to add an item to the ListView
         private void AddItemToListView(ListView listView, ListViewItem item)
         {
-   
-
             // Add the new item to the ListView
             listView.Items.Add(item);
         }
-
-
-
         // The method to check ListView items
         private void CheckListViewItems(ListView listView)
         {
@@ -59,8 +54,6 @@ namespace JoanasIncursionSiteTimer.models
 
             }
         }
-
-
         private void CountdownTimer_Tick(object sender, EventArgs e)
         {
             if (countdownSeconds > 0)
@@ -84,10 +77,7 @@ namespace JoanasIncursionSiteTimer.models
                   listViewItem.Remove();
               }
               ));
-
-
             }
         }
-
     }
 }
