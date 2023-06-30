@@ -39,6 +39,7 @@ namespace JoanasIncursionSiteTimer
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.lvTimers = new System.Windows.Forms.ListView();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSetup
@@ -111,12 +112,22 @@ namespace JoanasIncursionSiteTimer
             this.lvTimers.TabIndex = 12;
             this.lvTimers.UseCompatibleStateImageBehavior = false;
             // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.BackColor = System.Drawing.Color.Transparent;
+            this.lblVersion.Location = new System.Drawing.Point(12, 228);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(0, 13);
+            this.lblVersion.TabIndex = 14;
+            // 
             // JIST
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(248, 230);
+            this.ClientSize = new System.Drawing.Size(248, 250);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lvTimers);
             this.Controls.Add(this.lblMouseWarning);
             this.Controls.Add(this.rtbOutput);
@@ -148,6 +159,7 @@ namespace JoanasIncursionSiteTimer
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.ListView lvTimers;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 

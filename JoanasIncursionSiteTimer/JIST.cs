@@ -48,6 +48,8 @@ namespace JoanasIncursionSiteTimer
             tessa = new TesseractEngine(tessdataPath, "eng");
             logger = new Logger(logFilePath);
             logger.Log($"Currrent Tesseract Data Path: {tessdataPath}");
+
+            lblVersion.Text = Application.ProductVersion;
         }
 
         private void btnSetup_Click(object Sender, EventArgs e)
