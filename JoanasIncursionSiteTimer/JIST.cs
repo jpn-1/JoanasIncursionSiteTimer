@@ -10,7 +10,7 @@ using Tesseract;
 using JoanasIncursionSiteTimer.models;
 using JoanasIncursionSiteTimer.helpers;
 using JoanasIncursionSiteTimer.utility;
-
+using System.Reflection;
 
 namespace JoanasIncursionSiteTimer
 {
@@ -41,9 +41,13 @@ namespace JoanasIncursionSiteTimer
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Code to be executed when the form is loaded
-            tessa = new TesseractEngine((@"..\..\tessdata"), "eng");
+            string executablePath = Assembly.GetEntryAssembly().Location;
+            string executableDirectory = Path.GetDirectoryName(executablePath);
+            string tessdataPath = Path.Combine(executableDirectory, "tessdata");
+
+            tessa = new TesseractEngine(tessdataPath, "eng");
             logger = new Logger(logFilePath);
+            logger.Log($"Currrent Tesseract Data Path: {tessdataPath}");
         }
 
         private void btnSetup_Click(object Sender, EventArgs e)
