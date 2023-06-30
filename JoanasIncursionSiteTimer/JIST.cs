@@ -42,7 +42,7 @@ namespace JoanasIncursionSiteTimer
         private void Form1_Load(object sender, EventArgs e)
         {
             // Code to be executed when the form is loaded
-            tessa = new TesseractEngine(Path.GetFullPath(@"..\..\tessdata"), "eng");
+            tessa = new TesseractEngine((@"..\..\tessdata"), "eng");
             logger = new Logger(logFilePath);
         }
 
