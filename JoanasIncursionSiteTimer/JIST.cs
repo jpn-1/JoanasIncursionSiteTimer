@@ -32,6 +32,7 @@ namespace JoanasIncursionSiteTimer
         private Logger logger;
         private bool isFirstScan = true;
         private List<TimerItem> timers;
+        private string executableDirectoryPath;
         public JIST()
         {
             InitializeComponent();
@@ -41,9 +42,9 @@ namespace JoanasIncursionSiteTimer
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string executablePath = Assembly.GetEntryAssembly().Location;
-            string executableDirectory = Path.GetDirectoryName(executablePath);
-            string tessdataPath = Path.Combine(executableDirectory, "tessdata");
+
+            executableDirectoryPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string tessdataPath = Path.Combine(executableDirectoryPath, "tessdata");
 
             tessa = new TesseractEngine(tessdataPath, "eng");
             logger = new Logger(logFilePath);
@@ -71,18 +72,18 @@ namespace JoanasIncursionSiteTimer
 
             // Create a new ListViewItem for the TimerItem
             ListViewItem item = new ListViewItem(timerName);
-            item.Text= (TimeSpan.FromSeconds(countdownSeconds).ToString(@"mm\:ss"));
+            item.Text = (TimeSpan.FromSeconds(countdownSeconds).ToString(@"mm\:ss"));
             item.Tag = timerItem;
 
             // Add the item to the ListView
             lvTimers.Invoke(new Action(() =>
             {
-           
-      
-                    timerItem.StartTimer();
-       
+
+
+                timerItem.StartTimer();
+
             }));
-            
+
         }
 
 
@@ -305,10 +306,20 @@ namespace JoanasIncursionSiteTimer
                     {
                         if (activeSites.Count + 1 == cachedSites.Count)
                         {
-                            // Start a timer
-                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\..\Sounds\ding.wav");
-                            player.Play();
-                            AddTimerItem("Timer!",435);
+                            try
+                            {
+
+                                // Start a timer and play the ding sound
+
+                                System.Media.SoundPlayer player = new System.Media.SoundPlayer(Path.Combine(executableDirectoryPath, @"Sounds\ding.wav"));
+                                player.Play();
+                                AddTimerItem("Timer!", 435);
+                            }
+                            catch (Exception ex)
+                            {
+                                LogException(ex);
+                                throw;
+                            }
                         }
 
                         cachedSites.Clear();
@@ -326,26 +337,40 @@ namespace JoanasIncursionSiteTimer
 
         private void btnStartStop_Click(object Sender, EventArgs e)
         {
-            // isActive is used to check if we are running the thread+loop
-            if (!isActive)
+            try
             {
-                isActive = true;
-                // Create a new thread to run the loop in there seperatly
-                Thread thread = new Thread(HandleStart);
-                activeThread = thread;
-                activeThread.Start();
-                btnStartStop.Text = "Stop";
+                // isActive is used to check if we are running the thread+loop
+                if (!isActive)
+                {
+                    isActive = true;
+                    // Create a new thread to run the loop in there seperatly
+                    Thread thread = new Thread(HandleStart);
+                    activeThread = thread;
+                    activeThread.Start();
+                    btnStartStop.Text = "Stop";
+
+                }
+                else
+                {
+                    isActive = false;
+                    activeThread.Join();
+                    btnStartStop.Text = "Start";
+                    isFirstScan = true;
+                    btnSetup.Enabled = true;
+                }
 
             }
-            else
+            catch (Exception ex)
             {
-                isActive = false;
-                activeThread.Join();
-                btnStartStop.Text = "Start";
-                isFirstScan = true;
-                btnSetup.Enabled = true;
+                LogException(ex);
             }
         }
+
+        private void LogException(Exception ex)
+        {
+            logger.Log($"Error: {ex.Message} ,  Stack: {ex.StackTrace}");
+        }
+
 
         static string AggregateStrings(List<string> stringList, char separator)
         {
@@ -394,6 +419,6 @@ namespace JoanasIncursionSiteTimer
             UnhookMouse();
         }
     }
-   
+
 
 }
