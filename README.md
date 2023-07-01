@@ -16,7 +16,7 @@ How it looks like:
 
 Things to improve: 
 * There is way too much code inside the form.
-* Choosing the capture is clunky, maybe try an approach like [sharex](https://getsharex.com/) uses
+* Choosing the capture area is clunky, maybe try an approach like [sharex](https://getsharex.com/) uses
 * Expand error handling
 * Make playing the sound optional
 * Let user pick their own .wav file
