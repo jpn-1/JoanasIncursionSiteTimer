@@ -22,3 +22,4 @@ Things to improve:
 * Let user pick their own .wav file
 * Slider to adjust volume of the sound
 * Optional sound on timer expiry
+* Cancel timers somehow (right-click) ?
