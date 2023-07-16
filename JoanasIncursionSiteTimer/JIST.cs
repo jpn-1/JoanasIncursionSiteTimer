@@ -418,6 +418,39 @@ namespace JoanasIncursionSiteTimer
         {
             UnhookMouse();
         }
+
+
+        private void RemoveTimer(ListViewItem selectedItem)
+        {
+            if (selectedItem != null)
+            {
+                foreach (TimerItem item in timers)
+                {
+                    if (item.listViewItem == selectedItem)
+                    {
+                        item.timer.Stop();
+                        item.timer.Dispose();
+
+
+                    }
+
+
+                }
+
+
+                lvTimers.Items.Remove(selectedItem);
+            }
+        }
+        private void lvTimers_MouseClick(object sender, MouseEventArgs e)
+        {
+
+            if (e.Button == MouseButtons.Right)
+            {
+                RemoveTimer(lvTimers.GetItemAt(e.X, e.Y));
+
+             
+            }
+        }
     }
 
 

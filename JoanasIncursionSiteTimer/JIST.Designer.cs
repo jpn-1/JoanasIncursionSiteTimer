@@ -111,6 +111,7 @@ namespace JoanasIncursionSiteTimer
             this.lvTimers.Size = new System.Drawing.Size(224, 123);
             this.lvTimers.TabIndex = 12;
             this.lvTimers.UseCompatibleStateImageBehavior = false;
+            this.lvTimers.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvTimers_MouseClick);
             // 
             // lblVersion
             // 
@@ -118,15 +119,16 @@ namespace JoanasIncursionSiteTimer
             this.lblVersion.BackColor = System.Drawing.Color.Transparent;
             this.lblVersion.Location = new System.Drawing.Point(12, 228);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(0, 13);
+            this.lblVersion.Size = new System.Drawing.Size(68, 13);
             this.lblVersion.TabIndex = 14;
+            this.lblVersion.Text = "VersionLabel";
             // 
             // JIST
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(248, 250);
+            this.ClientSize = new System.Drawing.Size(248, 261);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lvTimers);
             this.Controls.Add(this.lblMouseWarning);
